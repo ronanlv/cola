@@ -32,7 +32,7 @@ func SX126xInitialize(sx sx126x) {
 	v_high := 1
 	l_m0, _ := gpiod.RequestLine("gpiochip0", M0, gpiod.AsOutput(v_low))
 	l_m1, _ := gpiod.RequestLine("gpiochip0", M1, gpiod.AsOutput(v_high))
-	time.Sleep(0.1)
+	time.Sleep(1)
 
 	// Needed in relay mode ONLY
 	//low_address = sx.address & 0xff
@@ -72,7 +72,7 @@ func SX126xInitialize(sx sx126x) {
 	for i := 0; i < 2; i++ {
 		uartInst.Write(sx126x_cfg)
 
-		time.Sleep(0.2)
+		time.Sleep(2)
 
 		b_available, _ := uartInst.BytesAvailable()
 		if b_available > 0 {
@@ -86,14 +86,14 @@ func SX126xInitialize(sx sx126x) {
 
 	l_m0.SetValue(0)
 	l_m1.SetValue(0)
-	time.Sleep(0.1)
+	time.Sleep(1)
 
 	uartInst.Close()
 }
 
 func SX126xPrintSettings() {
 	l_m1, _ := gpiod.RequestLine("gpiochip0", 27, gpiod.AsOutput(1))
-	time.Sleep(0.1)
+	time.Sleep(1)
 
 	uartInst, _ := UARTOpen("/dev/serial0", uartOpts)
 
