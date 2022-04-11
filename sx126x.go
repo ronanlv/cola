@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"github.com/warthog618/gpiod"
 	"github.com/warthog618/gpiod/device/rpi"
 	"time"
@@ -68,6 +69,8 @@ func SX126xInitialize(sx sx126x) {
 	sx126x_cfg[10] = hCrypt
 	sx126x_cfg[11] = lCrypt
 
+	fmt.Println("Setting options")
+
 	uartInst, _ := UARTOpen("/dev/serial0", uartOpts)
 	for i := 0; i < 2; i++ {
 		uartInst.Write(sx126x_cfg)
@@ -103,10 +106,10 @@ func SX126xPrintSettings() {
 	uartInst.Read(bufferRead)
 
 	if bufferRead[0] == 0xc1 && bufferRead[2] == 0x09 {
-		print("Frequency is" + string(bufferRead[8]) + ".125MHz.")
-		print("Node address is" + string(bufferRead[3]+bufferRead[4]) + ".")
-		print("Air speed" + string(bufferRead[6]&0x03) + "bps.")
-		print("Power speed" + string(bufferRead[7]&0x03) + "dBm.")
+		fmt.Println("Frequency is", string(bufferRead[8]), ".125MHz.")
+		fmt.Println("Node address is", string(bufferRead[3]+bufferRead[4]), ".")
+		fmt.Println("Air speed", string(bufferRead[6]&0x03), "bps.")
+		fmt.Println("Power speed", string(bufferRead[7]&0x03), "dBm.")
 	}
 
 	l_m1.SetValue(0)

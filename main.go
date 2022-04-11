@@ -37,7 +37,6 @@ func main() {
 	}
 
 	SX126xInitialize(sx)
-	time.Sleep(5)
+	time.Sleep(1)
 	SX126xPrintSettings()
-
 }
